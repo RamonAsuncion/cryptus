@@ -1,11 +1,11 @@
 /**
- * Plans for the future: 
+ * Plans for the future:
  * - key stretching
  * - PKCS7 padding
  */
 use aes_gcm::{
-    aead::{Aead, generic_array::GenericArray, 
-        AeadCore, KeyInit}, Aes256Gcm 
+    aead::{Aead, generic_array::GenericArray,
+        AeadCore, KeyInit}, Aes256Gcm
 };
 use rand::rngs::OsRng;
 use aes_gcm::aead::consts::U32;
@@ -19,7 +19,7 @@ use zeroize::Zeroize;
 
 fn main() {
     // Parse command-line arguments
-    let m = cli().get_matches(); 
+    let m = cli().get_matches();
 
     // Determine encryption or decryption mode.
     let encrypt: &bool = m.get_one::<bool>("encrypt").unwrap();
@@ -37,7 +37,7 @@ fn main() {
             if path.exists() {
                 let mut file = File::open(&path).expect("ERROR: Failed to open key file.");
                 let mut key: Vec<u8> = vec![0u8; 32]; // 32 byte keys
-                file.read_exact(&mut key).expect("ERROR: Failed to read key file."); 
+                file.read_exact(&mut key).expect("ERROR: Failed to read key file.");
                 key
             } else {
                 eprintln!("ERROR: Key file does not exist.");
@@ -45,7 +45,7 @@ fn main() {
             }
         },
         None => {
-            let key: Vec<u8> = get_password(); 
+            let key: Vec<u8> = get_password();
             key
         },
     };
@@ -69,7 +69,7 @@ fn main() {
         output.write_all(&cipher_text).expect("ERROR: Failed to write cipher_text.");
     } else if *decrypt {
         let output_file = input_file.with_extension("dec");
-            
+
         let mut file_content = Vec::new();
         let mut file = File::open(&input_file).expect("ERROR: Failed to open input file.");
         file.read_to_end(&mut file_content).expect("ERROR: Failed to read file content.");
@@ -82,7 +82,7 @@ fn main() {
         let mut output = File::create(&output_file).expect("ERROR: Failed to create output file.");
         output.write_all(&plaintext).expect("ERROR: Failed to write plaintext.");
     }
-    
+
 }
 
 /// Hash the user password.
@@ -106,7 +106,7 @@ fn get_password() -> Vec<u8> {
     let password = password.trim();
     let mut password = password.as_bytes().to_vec();
     let key = hash_password(&password, 1000);
-    password.zeroize(); // Create secret from memory.
+    password.zeroize(); // Remove secret from memory. (Remember free?)
     key
 }
 
