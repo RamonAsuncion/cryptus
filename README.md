@@ -4,11 +4,13 @@ Command-Line Tool for File Encryption using AES-256 in GCM mode (Symmetric).
 
 It's uses the simplest technique, symmetric encryption. The program uses pre-shared key to encrypt and decrypt messages.
 
+This is my project for engagement 2.
+
 ## What the code does
 
 - It uses `clap` to parse command-line arguments.
 
-- If the keyfile is provided, it reads in that file otherwise it
+- If the keyfile is provided, it reads in that file otherwise it asks the user for a password.
 
 - It uses AES-256 in GCM mode for encryption and decryption.
 
