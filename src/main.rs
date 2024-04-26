@@ -55,7 +55,7 @@ fn main() {
     let cipher = Aes256Gcm::new(&key);
 
     // Read the input file.
-    let data = process_file(&input_file).expect("Failed to process file");
+    let data = process_file(&input_file).expect("ERROR: Failed to process file");
 
     // Encrypt or decrypt the file based on the user selected mode.
     if *encrypt {
